@@ -9,9 +9,12 @@ export default App = () => {
 
   const [userData, setUserData] = useState({
     balance: 2230.00,
-    income: [230, 300, 49],
+    income: [240, 300, 49],
     expenses: [-23, -300, -12]
   })
+
+  const [income, setIncome] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   
   return (
 
@@ -26,10 +29,7 @@ export default App = () => {
             <TotalDisplay userBalance={userData.balance}/>
           </View>
           <View style={styles.box}>
-            <TransactionBlock userCompleteHistory={[userData.income, userData.expenses]}/>
-          </View>
-          <View style={styles.box}>
-            
+            <TransactionBlock userIncome={userData.income} userExpenses={userData.expenses}/>
           </View>
         </View>
         <View style={styles.footer}>
