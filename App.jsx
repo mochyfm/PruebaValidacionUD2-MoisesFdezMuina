@@ -3,11 +3,14 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { blueTheme } from './stylesSheet';
 import { useState } from 'react';
 import TotalDisplay from './Components/TotalDisplay/TotalDisplay';
+import TransactionBlock from './Components/TransactionBlock/TransactionBlock';
 
 export default App = () => {
 
   const [userData, setUserData] = useState({
     balance: 2230.00,
+    income: [230, 300, 49],
+    expenses: [-23, -300, -12]
   })
   
   return (
@@ -19,13 +22,18 @@ export default App = () => {
           <Text style={styles.headerText}>Oceanida</Text>
         </View>
         <View style={styles.body}>
-        <View style={styles.box}>
-          <TotalDisplay userBalance={userData.balance}/>
+          <View style={styles.box}>
+            <TotalDisplay userBalance={userData.balance}/>
+          </View>
+          <View style={styles.box}>
+            <TransactionBlock userCompleteHistory={[userData.income, userData.expenses]}/>
+          </View>
+          <View style={styles.box}>
+            
+          </View>
         </View>
-        <View style={styles.box}>
-        </View>
-        <View style={styles.box}>
-        </View>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>© 2022 Oceanida and its related entities</Text>
         </View>
       </View>
   );
@@ -60,5 +68,16 @@ const styles = StyleSheet.create({
   },
   box: {
     marginTop: 15,
+  },
+  footer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: blueTheme.secondary_backgroundColor,
+    flex: 1,
+    justifyContent: 'center',
+    width: '100%'
+  },
+  footerText: {
+    color: blueTheme.fontColor
   }
 });

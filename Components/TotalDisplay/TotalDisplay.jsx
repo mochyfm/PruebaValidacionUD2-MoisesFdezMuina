@@ -1,9 +1,7 @@
 import { Image, Text, StyleSheet, View } from 'react-native'
-
-import React, { Component } from 'react'
 import { blueTheme } from '../../stylesSheet'
 
-export default TotalDisplay = ({userBalance }) => {
+export default TotalDisplay = ({ userBalance }) => {
     
     return (
 
