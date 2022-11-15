@@ -2,13 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { blueTheme } from './stylesSheet';
 import { useState } from 'react';
-import LinearGradient from 'react-native-linear-gradient';
+import TotalDisplay from './Components/TotalDisplay/TotalDisplay';
 
-export default function App() {
+export default App = () => {
 
   const [userData, setUserData] = useState({
-    userName: '',
-    password: '1234'
+    balance: 2230.00,
   })
   
   return (
@@ -16,19 +15,17 @@ export default function App() {
       <View style={styles.appContainer}>
         <StatusBar style='light' animated={false}/>
         <View style={styles.header}>
-          <Image source={require('./imgs/header.png')} style={styles.headerImage}/>
+          <Image source={require('./assets/header.png')} style={styles.headerImage}/>
           <Text style={styles.headerText}>Oceanida</Text>
         </View>
         <View style={styles.body}>
-          <View style={styles.box}>
-            <Text>Oceanida</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Oceanida</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Oceanida</Text>
-          </View>
+        <View style={styles.box}>
+          <TotalDisplay userBalance={userData.balance}/>
+        </View>
+        <View style={styles.box}>
+        </View>
+        <View style={styles.box}>
+        </View>
         </View>
       </View>
   );
@@ -62,9 +59,6 @@ const styles = StyleSheet.create({
     flex: 9
   },
   box: {
-    borderColor: 'white',
-    borderWidth: 1,
-    alignItems: 'center',
-    margin: 20
+    marginTop: 15,
   }
 });
