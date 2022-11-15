@@ -1,10 +1,12 @@
 import { Text, StyleSheet, Pressable, View, Modal } from 'react-native';
 import { blueTheme } from '../../stylesSheet';
 import { useState } from 'react';
+import CustomModal from '../CustomModal/CustomModal';
 
 
 const getResultFromArray = (Array) => {
     result = 0;
+    
     Array.forEach(element => {
         result = element + result
     });
@@ -12,9 +14,9 @@ const getResultFromArray = (Array) => {
     return result;
 }
 
-export default TransactionBlock = ({ userCompleteHistory }) => {
+export default TransactionBlock = ({ userIncome, userExpenses }) => {
 
-    const [showExpenses, setshowExpenses] = useState(false);
+    const [showExpenses, setShowExpenses] = useState(false);
     const [showIncome, setShowIncome] = useState(false);
 
     return (
@@ -24,16 +26,30 @@ export default TransactionBlock = ({ userCompleteHistory }) => {
             <Text style={styles.subTitle}>(this month)</Text>
         </View>
         <View style={styles.rowDisplay}>
-            <Pressable onPress={() => console.log('Income')}>
+            <Pressable onPress={() => setShowIncome(!showIncome)}>
                 <View style={styles.incomeBlock}>
                     <Text style={styles.incomeTitle}>Income</Text>
-                    <Text style={styles.incomeAmount}>{getResultFromArray(userCompleteHistory[0]).toFixed(2)} €</Text>
+                    <Text style={styles.incomeAmount}>{getResultFromArray(userIncome).toFixed(2)} €</Text>
+                    <CustomModal 
+                        title={'Income'}
+                        style={blueTheme.modalTheme.incomeModal} 
+                        show={showIncome} 
+                        list={userIncome}
+                        displayFunction={setShowIncome}
+                        displayVariable={showIncome}/>
                 </View>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={() => setShowExpenses(!showExpenses)}>
                 <View style={styles.expensesBlock}>
                     <Text style={styles.expensesTitle}>Expenses</Text>
-                    <Text style={styles.expensesAmount}>{getResultFromArray(userCompleteHistory[1]).toFixed(2)} €</Text>
+                    <Text style={styles.expensesAmount}>{getResultFromArray(userExpenses).toFixed(2)} €</Text>
+                    <CustomModal 
+                        title={'Expenses'}
+                        style={blueTheme.modalTheme.expensesModal} 
+                        show={showExpenses} 
+                        list={userExpenses}
+                        displayFunction={setShowExpenses}
+                        displayVariable={showExpenses}/>
                 </View>
             </Pressable>
         </View>
