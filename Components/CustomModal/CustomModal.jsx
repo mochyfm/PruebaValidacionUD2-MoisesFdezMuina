@@ -1,23 +1,31 @@
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import { blueTheme } from '../../stylesSheet'
 
-export default CustomModal = ({ title, style, show, list, displayFunction, displayVariable}) => {
+export default CustomModal = ({ title, style, show, list, displayFunction }) => {
     return (
       <Modal visible={show} animationType={'fade'} transparent>
         <View style={[styles.mainBody, style]}>
             <View>
                 <View style={{flexDirection: 'row'}}>
                     <Text style={[styles.title, style]}>{title}</Text>
-                    <Text style={styles.subtitle}> (100,00 €)</Text>
+                    <Text style={styles.subtitle}> ({0.00.toFixed(2)}€)</Text>
                 </View>
                 <View style={styles.listBlock}>
+                    {list.length === 0 ? 
+                    <Text>There is not enough elements yet.</Text>
+                    : <FlatList data={list} renderItem={(productData) => {
+                        const { key, value } = productData.item;
+                        console.log(key, value);
+                        return (
+                            <View>
+                                <Text>{key}, {value}</Text>
+                            </View>
+                        )
+                    }} />}
                 </View>
                 <View style={styles.buttonBlock}>
-                    <Pressable onPress={() => displayFunction(!displayVariable)} style={styles.button}>
-                        <Text style={styles.buttonTheme}>Cancel</Text>
-                    </Pressable>
-                    <Pressable onPress={() => console.log('JaJa Este no hace nada')} style={styles.button}>
-                        <Text style={styles.buttonTheme}>Add</Text>
+                    <Pressable onPress={() => displayFunction(!show)} style={styles.button}>
+                        <Text style={styles.buttonTheme}>Exit</Text>
                     </Pressable>
                 </View>
             </View>
