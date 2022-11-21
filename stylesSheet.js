@@ -3,11 +3,17 @@ export const blueTheme = {
     secondary_backgroundColor: '#2D3792',
     fontColor: '#FFF',
     modalTheme: {
+        incomeModalText: {
+            color: '#0ECC23',
+        },
         incomeModal: {
-            color: '#0ECC23'
+            borderColor: '#0ECC23',
+        },
+        expensesModalText: {
+            color: '#FF0000'
         },
         expensesModal: {
-            color: '#FF0000'
+            borderColor: '#FF0000',
         }
     },
     fontIncomeColor: '#00FF00',
@@ -16,23 +22,24 @@ export const blueTheme = {
     horizontalLineColor: '#FFF',
     placeholderTextColor: '#C8D1DC',
     positiveButton: {
-        backgroundColor: '#2C9F0B',
+        backgroundColor: '#004200',
         fontColor: '#000'
     },
     selectedPositiveButton: {
         backgroundColor: '#00FF00',
         fontColor: '#000'
     },
+    negativeButton: {
+        backgroundColor: '#420000'
+    },
     selectedNegativeButton: {
         backgroundColor: '#FF0000',
         fontColor: '#000'
-    },
-    negativeButton: {
-        backgroundColor: '#A11303'
     },
     main_borderColor: '#182672',
     disabledButton_backgroundColor: '#1C2133',
     disabledButton_fontColor: '#FFF',
     enabledButton_backgroundColor: '#FFF',
-    enabledButton_fontColor: '#1D4BE0'
+    enabledButton_fontColor: '#1D4BE0',
+    commentText: '#919191',
 };

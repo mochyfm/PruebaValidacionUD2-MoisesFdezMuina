@@ -15,22 +15,6 @@ export default App = () => {
 
   const [showAddTransaction, setShowAddTransaction] = useState(false);
 
-  const [userData, setUserData] = useState({
-    balance: 0,
-    income: incomeList,
-    expenses: expensesList
-  });
-
-  useEffect(() => {
-
-    setUserData({
-      balance: getTotal(incomeList) + getTotal(expensesList),
-      income: incomeList,
-      expenses: expensesList
-    })
-
-  }, [incomeList, expensesList]);
-
   const getTotal = (Array) => {
     let result = 0;
     if (Array.length !== 0) {
@@ -41,13 +25,33 @@ export default App = () => {
     return result
   }
 
+  const [userData, setUserData] = useState({
+    balance: 0,
+    income: incomeList,
+    totalIncome: getTotal(incomeList),
+    expenses: expensesList,
+    totalExpenses: getTotal(expensesList)
+  });
+
+  useEffect(() => {
+
+    setUserData({
+      balance: getTotal(incomeList) + getTotal(expensesList),
+      income: incomeList,
+      totalIncome: getTotal(incomeList),
+      expenses: expensesList,
+      totalExpenses: getTotal(expensesList)
+    })
+
+  }, [incomeList, expensesList]);
+
   const addTransaction = (typeOfTransaction, element) => {
     switch(typeOfTransaction) {
       case 'positive':
-        setIncomeList([...incomeList, { uuid: uuidv4.v4(), ...element }])
+        setIncomeList([...incomeList, { id: uuidv4.v4(), ...element }])
         break;
       case 'negative':
-        setExpensesList([...expensesList, { uuid: uuidv4.v4(), ...element }])
+        setExpensesList([...expensesList, { id: uuidv4.v4(), ...element }])
         break;
     }
   }
@@ -70,8 +74,10 @@ export default App = () => {
         ? <View style={styles.box}>
           <TransactionBlock 
             userIncome={userData.income} 
+            totalIncome={userData.totalIncome}
             userExpenses={userData.expenses}
-            getTotal={getTotal}/>
+            totalExpenses={userData.totalExpenses}
+            />
         </View> : null }
         <View style={styles.box}>
         {!(showAddTransaction) 

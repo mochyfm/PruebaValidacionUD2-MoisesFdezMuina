@@ -6,18 +6,18 @@ import { useState, useEffect } from 'react'
 export default TransactionForm = ({show, showFunction, addTransaction}) => {
 
     const [typeOfTransaction, setTypeOfTransaction] = useState('positive')
-
-    useEffect(() => {
-        parseAmount();
-      }, [typeOfTransaction])
-      
-
+    
     const defaultForm = {
         quantity: 0,
         description: ''
     } 
 
     const [formData, setFormData] = useState(defaultForm)
+
+
+    useEffect(() => {
+        parseAmount();
+      }, [typeOfTransaction])
 
     const setQuantity = (value) => {
         result =  parseInt(value)
@@ -49,10 +49,10 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
     }
 
     const submitData = () => {
-        
         if (checkStatus()) {
             addTransaction(typeOfTransaction, formData)
             showFunction(!show);
+            setFormData(defaultForm);
         }
     }
 
@@ -74,7 +74,7 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
                             <TextInput 
                                 style={styles.transactionTextInput} 
                                 keyboardType='numeric'
-                                maxLength={6}
+                                maxLength={4}
                                 placeholder={'Quantity to add'}
                                 placeholderTextColor={blueTheme.placeholderTextColor}
                                 onChangeText={(value) => setQuantity(value)}

@@ -1,30 +1,28 @@
 import { FlatList, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import { blueTheme } from '../../stylesSheet'
+import TransactionItem from '../TransactionItem/TransactionItem';
 
-export default CustomModal = ({ title, style, show, list, displayFunction }) => {
+export default CustomModal = ({ title, style, display, list, listTotal, displayFunction }) => {
     return (
-      <Modal visible={show} animationType={'fade'} transparent>
+      <Modal visible={display} animationType={'fade'} transparent>
         <View style={[styles.mainBody, style]}>
             <View>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={[styles.title, style]}>{title}</Text>
-                    <Text style={styles.subtitle}> ({0.00.toFixed(2)}€)</Text>
+                    <Text style={[styles.title, ...style]}>{title}</Text>
+                    <Text style={styles.subtitle}> ({listTotal}€)</Text>
                 </View>
                 <View style={styles.listBlock}>
                     {list.length === 0 ? 
-                    <Text>There is not enough elements yet.</Text>
+                    <Text style={styles.notEnoughItemsText}>There is not enough elements yet.</Text>
                     : <FlatList data={list} renderItem={(productData) => {
-                        const { key, value } = productData.item;
-                        console.log(key, value);
+                        const { description, quantity, id } = productData.item;
                         return (
-                            <View>
-                                <Text>{key}, {value}</Text>
-                            </View>
+                            <TransactionItem style={style} description={description} quantity={quantity} id={id}/>
                         )
                     }} />}
                 </View>
                 <View style={styles.buttonBlock}>
-                    <Pressable onPress={() => displayFunction(!show)} style={styles.button}>
+                    <Pressable onPress={() => displayFunction(!display)} style={styles.button}>
                         <Text style={styles.buttonTheme}>Exit</Text>
                     </Pressable>
                 </View>
@@ -58,6 +56,10 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontSize: 20
     },
+    listBlock: {
+        flex: 1,
+        height: 600,
+    },
     buttonBlock: {
         alignSelf: 'center',
         flexDirection: 'row'
@@ -67,10 +69,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginRight: 10,
+        marginBottom: 30,
         width: 120
     },
     buttonTheme: {
         alignSelf: 'center',
         color: blueTheme.fontColor,
+    },
+    notEnoughItemsText: {
+        color: blueTheme.commentText,
+        fontStyle: 'italic'
     }
 })
