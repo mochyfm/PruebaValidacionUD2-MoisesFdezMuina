@@ -1,1 +1,1 @@
-export { default } from '/TotalDisplay'
+export { default } from './TotalDisplay'

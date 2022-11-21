@@ -12,6 +12,8 @@ const getResultFromArray = (Array) => {
     });
 
     return result;
+
+    // getResultFromArray(userIncome).toFixed(2)
 }
 
 export default TransactionBlock = ({ userIncome, userExpenses }) => {
@@ -29,27 +31,25 @@ export default TransactionBlock = ({ userIncome, userExpenses }) => {
             <Pressable onPress={() => setShowIncome(!showIncome)}>
                 <View style={styles.incomeBlock}>
                     <Text style={styles.incomeTitle}>Income</Text>
-                    <Text style={styles.incomeAmount}>{getResultFromArray(userIncome).toFixed(2)} €</Text>
+                    <Text style={styles.incomeAmount}>{0.00.toFixed(2)} €</Text>
                     <CustomModal 
                         title={'Income'}
                         style={blueTheme.modalTheme.incomeModal} 
                         show={showIncome} 
                         list={userIncome}
-                        displayFunction={setShowIncome}
-                        displayVariable={showIncome}/>
+                        displayFunction={setShowIncome}/>
                 </View>
             </Pressable>
             <Pressable onPress={() => setShowExpenses(!showExpenses)}>
                 <View style={styles.expensesBlock}>
                     <Text style={styles.expensesTitle}>Expenses</Text>
-                    <Text style={styles.expensesAmount}>{getResultFromArray(userExpenses).toFixed(2)} €</Text>
+                    <Text style={styles.expensesAmount}>{0.00.toFixed(2)} €</Text>
                     <CustomModal 
                         title={'Expenses'}
                         style={blueTheme.modalTheme.expensesModal} 
                         show={showExpenses} 
                         list={userExpenses}
-                        displayFunction={setShowExpenses}
-                        displayVariable={showExpenses}/>
+                        displayFunction={setShowExpenses}/>
                 </View>
             </Pressable>
         </View>
@@ -88,8 +88,9 @@ const styles = StyleSheet.create({
         marginLeft: 35,
     },
     expensesTitle: {
-        color: '#FF0000',
+        color: blueTheme.fontExpensesColor,
         fontSize: 20,
+        fontWeight: 'bold',
         textAlign: 'center'
     },
     expensesAmount: {
@@ -103,8 +104,9 @@ const styles = StyleSheet.create({
         paddingRight: 35,
     },
     incomeTitle: {
-        color: '#0ECC23',
+        color: blueTheme.fontIncomeColor,
         fontSize: 20,
+        fontWeight: 'bold',
         textAlign: 'center'
     },
     incomeAmount: {
