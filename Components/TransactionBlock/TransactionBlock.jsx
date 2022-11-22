@@ -3,20 +3,7 @@ import { blueTheme } from '../../stylesSheet';
 import { useState } from 'react';
 import CustomModal from '../CustomModal/CustomModal';
 
-
-const getResultFromArray = (Array) => {
-    result = 0;
-    
-    Array.forEach(element => {
-        result = element + result
-    });
-
-    return result;
-
-    // getResultFromArray(userIncome).toFixed(2)
-}
-
-export default TransactionBlock = ({ userIncome, userExpenses }) => {
+export default TransactionBlock = ({ userIncome, totalIncome, userExpenses, totalExpenses, deleteItem }) => {
 
     const [showExpenses, setShowExpenses] = useState(false);
     const [showIncome, setShowIncome] = useState(false);
@@ -31,25 +18,31 @@ export default TransactionBlock = ({ userIncome, userExpenses }) => {
             <Pressable onPress={() => setShowIncome(!showIncome)}>
                 <View style={styles.incomeBlock}>
                     <Text style={styles.incomeTitle}>Income</Text>
-                    <Text style={styles.incomeAmount}>{0.00.toFixed(2)} €</Text>
+                    <Text style={styles.incomeAmount}>{totalIncome.toFixed(2)} €</Text>
                     <CustomModal 
                         title={'Income'}
-                        style={blueTheme.modalTheme.incomeModal} 
-                        show={showIncome} 
+                        style={[blueTheme.modalTheme.incomeModal, blueTheme.modalTheme.incomeModalText]}  
                         list={userIncome}
-                        displayFunction={setShowIncome}/>
+                        listTotal={totalIncome}
+                        display={showIncome}
+                        displayFunction={setShowIncome}
+                        deleteItem={deleteItem}
+                        typeOfItem={'income'}/>
                 </View>
             </Pressable>
             <Pressable onPress={() => setShowExpenses(!showExpenses)}>
                 <View style={styles.expensesBlock}>
                     <Text style={styles.expensesTitle}>Expenses</Text>
-                    <Text style={styles.expensesAmount}>{0.00.toFixed(2)} €</Text>
+                    <Text style={styles.expensesAmount}>{totalExpenses.toFixed(2)} €</Text>
                     <CustomModal 
                         title={'Expenses'}
-                        style={blueTheme.modalTheme.expensesModal} 
-                        show={showExpenses} 
+                        style={[blueTheme.modalTheme.expensesModal, blueTheme.modalTheme.expensesModalText]} 
                         list={userExpenses}
-                        displayFunction={setShowExpenses}/>
+                        listTotal={totalExpenses}
+                        display={showExpenses} 
+                        displayFunction={setShowExpenses}
+                        deleteItem={deleteItem}
+                        typeOfItem={'expenses'}/>
                 </View>
             </Pressable>
         </View>

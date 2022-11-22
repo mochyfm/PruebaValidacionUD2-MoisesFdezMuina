@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { blueTheme } from './stylesSheet';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid'
@@ -15,22 +15,6 @@ export default App = () => {
 
   const [showAddTransaction, setShowAddTransaction] = useState(false);
 
-  const [userData, setUserData] = useState({
-    balance: 0,
-    income: incomeList,
-    expenses: expensesList
-  });
-
-  useEffect(() => {
-
-    setUserData({
-      balance: getTotal(incomeList) + getTotal(expensesList),
-      income: incomeList,
-      expenses: expensesList
-    })
-
-  }, [incomeList, expensesList]);
-
   const getTotal = (Array) => {
     let result = 0;
     if (Array.length !== 0) {
@@ -41,15 +25,47 @@ export default App = () => {
     return result
   }
 
+  const [userData, setUserData] = useState({
+    balance: 0,
+    income: incomeList,
+    totalIncome: getTotal(incomeList),
+    expenses: expensesList,
+    totalExpenses: getTotal(expensesList)
+  });
+
+  useEffect(() => {
+
+    setUserData({
+      balance: getTotal(incomeList) + getTotal(expensesList),
+      income: incomeList,
+      totalIncome: getTotal(incomeList),
+      expenses: expensesList,
+      totalExpenses: getTotal(expensesList)
+    })
+
+  }, [incomeList, expensesList]);
+
   const addTransaction = (typeOfTransaction, element) => {
     switch(typeOfTransaction) {
       case 'positive':
-        setIncomeList([...incomeList, { uuid: uuidv4.v4(), ...element }])
+        setIncomeList([...incomeList, { id: uuidv4.v4(), ...element }])
         break;
       case 'negative':
-        setExpensesList([...expensesList, { uuid: uuidv4.v4(), ...element }])
+        setExpensesList([...expensesList, { id: uuidv4.v4(), ...element }])
         break;
     }
+  }
+
+  const deleteItem = (idItem, typeOfList) => {
+      switch(typeOfList) {
+        case 'income':
+          setIncomeList(() => incomeList.filter((element) => element.id !== idItem));
+          break;
+        case 'expenses':
+          setExpensesList(() => expensesList.filter((element) => element.id !== idItem));
+          break;
+      }
+
   }
 
   return (
@@ -70,8 +86,11 @@ export default App = () => {
         ? <View style={styles.box}>
           <TransactionBlock 
             userIncome={userData.income} 
+            totalIncome={userData.totalIncome}
             userExpenses={userData.expenses}
-            getTotal={getTotal}/>
+            totalExpenses={userData.totalExpenses}
+            deleteItem={deleteItem}
+            />
         </View> : null }
         <View style={styles.box}>
         {!(showAddTransaction) 
@@ -80,10 +99,10 @@ export default App = () => {
             showFunction={setShowAddTransaction}/>  : null }
           {showAddTransaction === true 
           ? <TransactionForm 
-              show={showAddTransaction} 
-              showFunction={setShowAddTransaction}
-              addTransaction={addTransaction}
-            />
+                show={showAddTransaction} 
+                showFunction={setShowAddTransaction}
+                addTransaction={addTransaction}
+              />
           : null} 
         </View>
       </View>

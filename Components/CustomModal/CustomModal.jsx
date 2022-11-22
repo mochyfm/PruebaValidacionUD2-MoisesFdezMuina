@@ -1,35 +1,43 @@
 import { FlatList, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import { blueTheme } from '../../stylesSheet'
+import { useState } from 'react'
+import TransactionItem from '../TransactionItem/TransactionItem';
 
-export default CustomModal = ({ title, style, show, list, displayFunction }) => {
+export default CustomModal = ({ title, style, display, displayFunction, typeOfItem, list, listTotal, deleteItem}) => {
+    
     return (
-      <Modal visible={show} animationType={'fade'} transparent>
+      <Modal visible={display} animationType={'fade'} transparent>
         <View style={[styles.mainBody, style]}>
             <View>
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={[styles.title, style]}>{title}</Text>
-                    <Text style={styles.subtitle}> ({0.00.toFixed(2)}€)</Text>
+                <View style={styles.titleBlock}>
+                    <Text style={[styles.title, ...style]}>{title}</Text>
+                    <Text style={styles.subtitle}> ({listTotal.toFixed(2)}€)</Text>
                 </View>
                 <View style={styles.listBlock}>
-                    {list.length === 0 ? 
-                    <Text>There is not enough elements yet.</Text>
+                    { list.length === 0 ? 
+                    <Text style={styles.notEnoughItemsText}>There is not enough elements yet.</Text>
                     : <FlatList data={list} renderItem={(productData) => {
-                        const { key, value } = productData.item;
-                        console.log(key, value);
+                        const { id, description, quantity, date } = productData.item;
                         return (
-                            <View>
-                                <Text>{key}, {value}</Text>
-                            </View>
+                            <TransactionItem 
+                            style={style} 
+                            id={id}  
+                            description={description} 
+                            quantity={quantity} 
+                            date={date}
+                            deleteItem={deleteItem} 
+                            typeOfItem={typeOfItem}
+                            />
                         )
-                    }} />}
+                    }} /> }
                 </View>
                 <View style={styles.buttonBlock}>
-                    <Pressable onPress={() => displayFunction(!show)} style={styles.button}>
+                    <Pressable onPress={() => displayFunction(!display)} style={styles.button}>
                         <Text style={styles.buttonTheme}>Exit</Text>
                     </Pressable>
                 </View>
             </View>
-        </View>
+        </View> 
       </Modal>
     )
 }
@@ -38,25 +46,32 @@ const styles = StyleSheet.create({
     mainBody: {
         alignSelf: 'center',
         alignItems: 'center',
+        alignContent: 'center',
         backgroundColor: blueTheme.secondary_backgroundColor,
         borderRadius: 5,
         marginTop: 65,
         height: '80%',
-        width: '95%'
+        width: '95%',
+    },
+    titleBlock: { 
+        alignSelf: 'center', 
+        flexDirection: 'row',
+        marginTop: 20, 
+        marginBottom: 15
     },
     title: {
-        alignSelf: 'center',
-        marginBottom: 20,
-        marginTop: 20,
-        fontSize: 30
+        justifyContent: 'center',
+        fontSize: 30,
     },
     subtitle: {
-        alignSelf: 'center',
         color: '#FFF',
-        marginLeft: 15,
-        marginBottom: 20,
-        marginTop: 20,
+        marginTop: 8,
+        marginLeft: 5,
         fontSize: 20
+    },
+    listBlock: {
+        flex: 1,
+        height: 600,
     },
     buttonBlock: {
         alignSelf: 'center',
@@ -66,11 +81,17 @@ const styles = StyleSheet.create({
         backgroundColor: blueTheme.main_backgroundColor,
         borderRadius: 10,
         padding: 10,
+        marginTop: 10,
         marginRight: 10,
+        marginBottom: 30,
         width: 120
     },
     buttonTheme: {
         alignSelf: 'center',
         color: blueTheme.fontColor,
+    },
+    notEnoughItemsText: {
+        color: blueTheme.commentText,
+        fontStyle: 'italic'
     }
 })

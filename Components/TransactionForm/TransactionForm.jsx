@@ -1,26 +1,27 @@
-import { Image, Modal, Text, StyleSheet, View, TextInput } from 'react-native'
+import { Modal, Text, StyleSheet, View, TextInput, ScrollView } from 'react-native'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 import { blueTheme } from '../../stylesSheet'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import DatePicker from 'react-native-modern-datepicker'
 
 export default TransactionForm = ({show, showFunction, addTransaction}) => {
 
-    const [typeOfTransaction, setTypeOfTransaction] = useState('positive')
-
-    useEffect(() => {
-        parseAmount();
-      }, [typeOfTransaction])
-      
+    const [typeOfTransaction, setTypeOfTransaction] = useState('positive');
 
     const defaultForm = {
         quantity: 0,
-        description: ''
+        description: '',
+        date: '2022-11-23'
     } 
 
     const [formData, setFormData] = useState(defaultForm)
 
+    useEffect(() => {
+        parseAmount();
+      }, [typeOfTransaction, formData.quantity])
+
     const setQuantity = (value) => {
-        result =  parseInt(value)
+        result =  parseFloat(value)
         setFormData({ ...formData, quantity: result});
     }
 
@@ -44,25 +45,30 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
         setFormData({ ...formData, description: value});
     }
 
+    const setDate = (value) => {
+        setFormData({ ...formData, date: value})
+    }
+
     const turnValue = (typeOfValue) => {
         setTypeOfTransaction(typeOfValue);
     }
 
     const submitData = () => {
-        
         if (checkStatus()) {
             addTransaction(typeOfTransaction, formData)
             showFunction(!show);
+            setFormData(defaultForm);
         }
     }
 
     const checkStatus = () => {
-        return (formData.quantity >= 0 || formData.quantity <= 0)
+        return (Math.abs(formData.quantity) > 0 || formData.quantity < 0)
         && formData.description.trim() != '';
     }
 
     return (
         <Modal show={show} animationType={'fade'} transparent>
+        <ScrollView>
             <View style={styles.transactionFormBody}>
                 <View style={styles.transactionDataInput}>
                     <View style={styles.transactionFormTitleBlock}>
@@ -74,10 +80,10 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
                             <TextInput 
                                 style={styles.transactionTextInput} 
                                 keyboardType='numeric'
-                                maxLength={6}
+                                maxLength={5}
                                 placeholder={'Quantity to add'}
                                 placeholderTextColor={blueTheme.placeholderTextColor}
-                                onChangeText={(value) => setQuantity(value)}
+                                onChangeText={(quantity) => setQuantity(quantity)}
                                 value={formData.quantity}/>
                         </View>
                         <View style={styles.transactionLabelTextInputSection}>
@@ -87,8 +93,15 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
                                 style={[styles.transactionTextInput, styles.transactionDescriptionInput]} 
                                 placeholder={'Description'}
                                 placeholderTextColor={blueTheme.placeholderTextColor}
-                                onChangeText={(value) => setDescription(value)}
+                                onChangeText={(desc) => setDescription(desc)}
                                 value={formData.description}/>
+                        </View>
+                        <View>
+                            <DatePicker 
+                                options={blueTheme.calendarOptions}
+                                onSelectedChange={(date) => setDate(date)}
+                                current={'2022-11-23'}
+                            />
                         </View>
                         <View style={styles.transactionDataTypeSection}>
                             <Pressable onPress={() => turnValue('positive')}>
@@ -117,6 +130,7 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
                     </View>
                 </View>
             </View>
+        </ScrollView>
         </Modal>
     )
 }
@@ -175,9 +189,6 @@ const styles = StyleSheet.create({
     },  
     transactionDescriptionInput: {
         color: blueTheme.fontColor,
-        borderColor: blueTheme.main_borderColor,
-        borderRadius: 5,
-        borderBottomWidth: 2.5,
         fontSize: 16,
         marginTop: 10,
         textAlign: 'left',
