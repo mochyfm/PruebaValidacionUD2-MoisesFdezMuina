@@ -12,7 +12,7 @@ export default TotalDisplay = ({ userBalance }) => {
             <Image source={require('../../assets/imgs/wallet.png')}/>
           </View>
           <View style={styles.bodyBlock}>
-            <Text style={styles.bodyText}>{userBalance.toFixed(2)} €</Text>
+            <Text style={[styles.bodyText, userBalance >= 0 ? null : {color: blueTheme.fontExpensesColor}]}>{userBalance.toFixed(2)} €</Text>
           </View>
         </View>
       </View>   

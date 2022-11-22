@@ -4,11 +4,6 @@ import { useState } from 'react'
 import TransactionItem from '../TransactionItem/TransactionItem';
 
 export default CustomModal = ({ title, style, display, displayFunction, typeOfItem, list, listTotal, deleteItem}) => {
-
-    const [modifyDisplay, setModifyDisplay] = useState({
-        state: false,
-        id: 0,
-    })
     
     return (
       <Modal visible={display} animationType={'fade'} transparent>
@@ -22,13 +17,14 @@ export default CustomModal = ({ title, style, display, displayFunction, typeOfIt
                     { list.length === 0 ? 
                     <Text style={styles.notEnoughItemsText}>There is not enough elements yet.</Text>
                     : <FlatList data={list} renderItem={(productData) => {
-                        const { description, quantity, id } = productData.item;
+                        const { id, description, quantity, date } = productData.item;
                         return (
                             <TransactionItem 
                             style={style} 
+                            id={id}  
                             description={description} 
                             quantity={quantity} 
-                            id={id}  
+                            date={date}
                             deleteItem={deleteItem} 
                             typeOfItem={typeOfItem}
                             />

@@ -4,12 +4,12 @@ import React, { Component } from 'react'
 import { useState } from 'react';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
-export default TransactionItem = ({style, id, description, quantity, deleteItem, typeOfItem}) => {
+export default TransactionItem = ({style, id, description, quantity, date, deleteItem, typeOfItem}) => {
 
     return (
       <View style={[styles.transactionTransactionItem, ...style]}>
         <View style={styles.transactionDataBlock}>
-          <View style={{flexDirection: 'row', marginBottom: 30}}>
+          <View style={{alignSelf: 'flex-start', flexDirection: 'row', marginBottom: 30, width: '80%'}}>
             <Text style={[styles.descriptionLegend, ...style]}>
               Description: 
             </Text>
@@ -26,6 +26,14 @@ export default TransactionItem = ({style, id, description, quantity, deleteItem,
             </Text>
             <Text style={[styles.transactionAmountText, ...style]}>
                €
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.transactionDateText}>
+              Date: 
+            </Text>
+            <Text style={styles.transactionDateText}>
+              {date}
             </Text>
           </View>
         </View>
@@ -62,7 +70,7 @@ const styles = StyleSheet.create({
       width: '90%'
     },
     transactionDataBlock: {
-      alignItems: 'center',
+      alignItems: 'flex-start',
       borderBottomColor: blueTheme.main_borderColor,
       borderBottomWidth: 3,
       paddingBottom: 15,
@@ -74,6 +82,11 @@ const styles = StyleSheet.create({
     },
     transactionDescriptionText: {
       color: blueTheme.descriptionColor,
+    },
+    transactionDateText: {
+      color: blueTheme.dateColor,
+      fontSize: 20,
+      marginRight: 5
     },
     transactionAmountText: {
       color: blueTheme.descriptionColor,

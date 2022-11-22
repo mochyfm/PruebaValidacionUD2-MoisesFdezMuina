@@ -21,6 +21,30 @@ export const blueTheme = {
     modal_backgroundColor: '#007FFA',
     horizontalLineColor: '#FFF',
     placeholderTextColor: '#C8D1DC',
+    calendarOptions: {
+        backgroundColor: '#182672',
+        textHeaderColor: '#FFF',
+        textDefaultColor: '#FFF',
+        selectedTextColor: '#182672',
+        mainColor: '#FFF',
+        textSecondaryColor: '#FFF'
+    },
+    positiveCalendar: {
+        backgroundColor: '#182672',
+        textHeaderColor: '#15A12C',
+        textDefaultColor: '#15A12C',
+        selectedTextColor: '#15A12C',
+        mainColor: '#FFF',
+        textSecondaryColor: '#FFF'
+    },
+    negativeCalendar: {
+        backgroundColor: '#182672',
+        textHeaderColor: '#A81D29',
+        textDefaultColor: '#A81D29',
+        selectedTextColor: '#A81D29',
+        mainColor: '#FFF',
+        textSecondaryColor: '#FFF'
+    },
     positiveButton: {
         backgroundColor: '#004200',
         fontColor: '#000'
@@ -43,6 +67,7 @@ export const blueTheme = {
     enabledButton_fontColor: '#1D4BE0',
     commentText: '#919191',
     descriptionColor: '#FFF',
+    dateColor: '#FFF',
     modifyButtonBackgroundColor: '#182672',
     deleteButtonBackgroundColor: '#4F1224',
     buttonFontColor: '#FFF'
