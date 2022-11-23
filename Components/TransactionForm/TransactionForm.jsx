@@ -79,7 +79,7 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
                             <TextInput 
                                 style={styles.transactionTextInput} 
                                 keyboardType='numeric'
-                                maxLength={5}
+                                maxLength={8}
                                 placeholder={'Quantity to add'}
                                 placeholderTextColor={blueTheme.placeholderTextColor}
                                 onChangeText={(quantity) => setQuantity(quantity)}
