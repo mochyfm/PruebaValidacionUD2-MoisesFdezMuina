@@ -1,5 +1,5 @@
 import { Image, Text, StyleSheet, View } from 'react-native'
-import { blueTheme } from '../../stylesSheet'
+import { blueTheme } from '../../Constants/stylesSheet'
 
 export default TotalDisplay = ({ userBalance }) => {
     

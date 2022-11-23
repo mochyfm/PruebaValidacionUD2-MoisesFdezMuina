@@ -1,6 +1,6 @@
 import { Modal, Text, StyleSheet, View, TextInput, ScrollView } from 'react-native'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
-import { blueTheme } from '../../stylesSheet'
+import { blueTheme } from '../../Constants/stylesSheet'
 import React, { useState, useEffect } from 'react'
 import DatePicker from 'react-native-modern-datepicker'
 

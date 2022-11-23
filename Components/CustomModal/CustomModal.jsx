@@ -1,5 +1,5 @@
 import { FlatList, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
-import { blueTheme } from '../../stylesSheet'
+import { blueTheme } from '../../Constants/stylesSheet'
 import TransactionItem from '../TransactionItem/TransactionItem';
 
 export default CustomModal = ({ title, style, display, displayFunction, typeOfItem, list, listTotal, deleteItem}) => {

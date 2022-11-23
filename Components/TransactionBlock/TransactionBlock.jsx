@@ -1,5 +1,5 @@
 import { Text, StyleSheet, Pressable, View, Modal } from 'react-native';
-import { blueTheme } from '../../stylesSheet';
+import { blueTheme } from '../../Constants/stylesSheet'
 import { useState } from 'react';
 import CustomModal from '../CustomModal/CustomModal';
 

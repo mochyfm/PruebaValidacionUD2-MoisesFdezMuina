@@ -1,6 +1,5 @@
 import { Text, StyleSheet, Pressable, View } from 'react-native'
-import { blueTheme } from '../../stylesSheet'
-import { useState } from 'react'
+import { blueTheme } from '../../Constants/stylesSheet'
 
 export default AddTransaction = ({ show, showFunction}) => {
 
