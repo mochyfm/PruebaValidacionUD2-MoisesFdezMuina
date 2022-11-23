@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { blueTheme } from '../../stylesSheet';
+import { blueTheme } from '../../Constants/stylesSheet';
 import React from 'react';
 
 export default TransactionItem = ({style, id, description, quantity, date, deleteItem, typeOfItem}) => {

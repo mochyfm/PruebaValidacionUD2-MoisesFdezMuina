@@ -1,24 +1,36 @@
 import { Modal, Text, StyleSheet, View, TextInput, ScrollView } from 'react-native'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
-import { blueTheme } from '../../stylesSheet'
+import { blueTheme } from '../../Constants/stylesSheet'
 import React, { useState, useEffect } from 'react'
 import DatePicker from 'react-native-modern-datepicker'
 
 export default TransactionForm = ({show, showFunction, addTransaction}) => {
 
-    const [currentDate, setCurrentDate] = useState(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`)
+    const [dateData, setDateData] = useState({
+        currentDate: `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`,
+        minimumDate: `${new Date().getFullYear() - 15}/1/1`,
+        maximumDate: `${new Date().getFullYear() + 15}/12/31`
+    })
+    
     const [typeOfTransaction, setTypeOfTransaction] = useState('positive');
 
     const defaultForm = {
         quantity: 0,
         description: '',
-        date: currentDate
+        date: dateData.currentDate
     } 
 
     const [formData, setFormData] = useState(defaultForm)
 
     useEffect(() => {
-        
+        setDateData({
+            currentDate: `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`,
+            minimumDate: `${new Date().getFullYear() - 15}/1/1`,
+            maximumDate: `${new Date().getFullYear() + 15}/12/31`
+        })
+    }, [])
+
+    useEffect(() => {
         result = Math.abs(formData.quantity);
         if(result !== 0) {
             switch (typeOfTransaction) {
@@ -55,7 +67,6 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
         if (checkStatus()) {
             addTransaction(typeOfTransaction, formData)
             showFunction(!show);
-            setCurrentDate(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`)
             setFormData(defaultForm);
         }
     }
@@ -98,8 +109,11 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
                         <View>
                             <DatePicker 
                                 options={blueTheme.calendarOptions}
-                                current={currentDate}
+                                selected={formData.date}
+                                maximumDate={dateData.maximumDate}
+                                minimumDate={dateData.minimumDate}
                                 onDateChange={(date) => setDate(date)}
+                                mode="calendar"
                             />
                         </View>
                         <View style={styles.transactionDataTypeSection}>

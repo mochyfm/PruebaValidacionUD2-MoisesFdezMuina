@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { blueTheme } from './stylesSheet';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { blueTheme } from './Constants/stylesSheet';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid'
 import TotalDisplay from './Components/TotalDisplay';
