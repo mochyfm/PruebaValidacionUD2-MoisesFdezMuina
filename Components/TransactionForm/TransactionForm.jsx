@@ -6,26 +6,19 @@ import DatePicker from 'react-native-modern-datepicker'
 
 export default TransactionForm = ({show, showFunction, addTransaction}) => {
 
+    const [currentDate, setCurrentDate] = useState(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`)
     const [typeOfTransaction, setTypeOfTransaction] = useState('positive');
 
     const defaultForm = {
         quantity: 0,
         description: '',
-        date: '2022-11-23'
+        date: currentDate
     } 
 
     const [formData, setFormData] = useState(defaultForm)
 
     useEffect(() => {
-        parseAmount();
-      }, [typeOfTransaction, formData.quantity])
-
-    const setQuantity = (value) => {
-        result =  parseFloat(value)
-        setFormData({ ...formData, quantity: result});
-    }
-
-    const parseAmount = () => {
+        
         result = Math.abs(formData.quantity);
         if(result !== 0) {
             switch (typeOfTransaction) {
@@ -38,8 +31,13 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
             }
         }
         setFormData({ ...formData, quantity: result});
-    }
 
+      }, [typeOfTransaction, formData.quantity])
+
+    const setQuantity = (value) => {
+        result =  parseFloat(value)
+        setFormData({ ...formData, quantity: result});
+    }
 
     const setDescription = (value) => {
         setFormData({ ...formData, description: value});
@@ -57,6 +55,7 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
         if (checkStatus()) {
             addTransaction(typeOfTransaction, formData)
             showFunction(!show);
+            setCurrentDate(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`)
             setFormData(defaultForm);
         }
     }
@@ -99,8 +98,8 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
                         <View>
                             <DatePicker 
                                 options={blueTheme.calendarOptions}
-                                onSelectedChange={(date) => setDate(date)}
-                                current={'2022-11-23'}
+                                current={currentDate}
+                                onDateChange={(date) => setDate(date)}
                             />
                         </View>
                         <View style={styles.transactionDataTypeSection}>
