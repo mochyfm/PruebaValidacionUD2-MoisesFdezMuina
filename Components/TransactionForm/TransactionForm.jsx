@@ -1,4 +1,4 @@
-import { Modal, Text, StyleSheet, View, TextInput, ScrollView } from 'react-native'
+import { Alert, Modal, Text, StyleSheet, View, TextInput, ScrollView } from 'react-native'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 import { blueTheme } from '../../Constants/stylesSheet'
 import React, { useState, useEffect } from 'react'
@@ -46,6 +46,19 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
 
       }, [typeOfTransaction, formData.quantity])
 
+    const showAlert = () => {
+        Alert.alert(
+            'Error',
+            "You need to Add a Quantity and a Description, if you leave the date empty it will take today as it",
+            [
+              {
+                text: "Ok",
+                style: "ok",
+              },
+            ],
+          );
+    }
+
     const setQuantity = (value) => {
         result =  parseFloat(value)
         setFormData({ ...formData, quantity: result});
@@ -68,6 +81,8 @@ export default TransactionForm = ({show, showFunction, addTransaction}) => {
             addTransaction(typeOfTransaction, formData)
             showFunction(!show);
             setFormData(defaultForm);
+        } else {
+            showAlert()
         }
     }
 
